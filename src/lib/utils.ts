@@ -14,24 +14,28 @@ export function formatDate(date: string) {
   let timeDifference = Math.abs(currentDate - targetDate);
   let daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
-  let fullDate = new Date(date).toLocaleString("en-us", {
+  let fullDate = new Date(date).toLocaleString("de-AT", {
     month: "long",
     day: "numeric",
     year: "numeric",
   });
 
   if (daysAgo < 1) {
-    return "Today";
+    return "Heute";
   } else if (daysAgo < 7) {
-    return `${fullDate} (${daysAgo}d ago)`;
+    const dayLabel = daysAgo === 1 ? "Tag" : "Tagen";
+    return `${fullDate} (vor ${daysAgo} ${dayLabel})`;
   } else if (daysAgo < 30) {
     const weeksAgo = Math.floor(daysAgo / 7);
-    return `${fullDate} (${weeksAgo}w ago)`;
+    const weekLabel = weeksAgo === 1 ? "Woche" : "Wochen";
+    return `${fullDate} (vor ${weeksAgo} ${weekLabel})`;
   } else if (daysAgo < 365) {
     const monthsAgo = Math.floor(daysAgo / 30);
-    return `${fullDate} (${monthsAgo}mo ago)`;
+    const monthLabel = monthsAgo === 1 ? "Monat" : "Monaten";
+    return `${fullDate} (vor ${monthsAgo} ${monthLabel})`;
   } else {
     const yearsAgo = Math.floor(daysAgo / 365);
-    return `${fullDate} (${yearsAgo}y ago)`;
+    const yearLabel = yearsAgo === 1 ? "Jahr" : "Jahren";
+    return `${fullDate} (vor ${yearsAgo} ${yearLabel})`;
   }
 }
